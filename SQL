@@ -1,0 +1,584 @@
+----------1
+Create Table Customer(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Phone_No numeric,
+	City varchar(15)
+);
+
+Create Table Salesman(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Phone_No numeric,
+	Commission_Rate float,
+	City varchar(15)
+);
+
+Create Table Orders(
+	ID serial PRIMARY KEY,
+	Total_Amount int,
+	Quantity int,
+	Order_Date date,
+	Placed_Date date,
+	Customer_ID int REFERENCES Customer(ID),
+	Salesman_ID int REFERENCES Salesman(ID)
+);
+
+SELECT * FROM Customer
+SELECT * FROM Salesman
+SELECT * FROM Orders
+
+----------1
+INSERT INTO Customer
+VALUES
+(1,'Raj Patel', 9876543210, 'Rajkot'),
+(2,'Nisha Shah', 9123456789, 'Ahmedabad'),
+(3,'Amit Mehta', 9988776655, 'Surat'),
+(4,'Divya Rana', 8899001122, 'Vadodara'),
+(5,'Harshil Joshi', 9090909090, 'Bhavnagar'),
+(6,'Kajal Desai', 9871234567, 'Jamnagar');
+
+INSERT INTO Salesman
+VALUES
+(1,'Mehul Thakkar', 9823456710, 0.11, 'Rajkot'),
+(2,'Sneha Bhatt', 9012345678, 0.10, 'Ahmedabad'),
+(3,'Viral Soni', 9944556677, 0.09, 'Surat'),
+(4,'Reema Panchal', 9876001234, 0.12, 'Vadodara'),
+(5,'Krunal Gohil', 9898989898, 0.10, 'Bhavnagar'),
+(6,'Chirag Vyas', 9785612345, 0.13, 'Jamnagar');
+
+INSERT INTO Orders
+VALUES
+(1,1000, 2, '2025-07-01', '2025-06-30', 1, 1),
+(2,1200, 3, '2025-07-02', '2025-07-01', 2, 2),
+(3,1500, 5, '2025-07-03', '2025-07-02', 3, 3),
+(4,2000, 4, '2025-07-04', '2025-07-03', 4, 4),
+(5,2500, 6, '2025-07-05', '2025-07-04', 5, 5),
+(6,1300, 2, '2025-07-06', '2025-07-05', 1, 1),
+(7,1100, 1, '2025-07-07', '2025-07-06', 2, 2),
+(8,1600, 3, '2025-07-08', '2025-07-07', 3, 3),
+(9,2100, 4, '2025-07-09', '2025-07-08', 4, 4),
+(10,1900, 5, '2025-07-10', '2025-07-09', 5, 5),
+(11,1800, 2, '2025-07-11', '2025-07-10', 1, 1),
+(12,1700, 3, '2025-07-12', '2025-07-11', 2, 2),
+(13,1400, 2, '2025-07-13', '2025-07-12', 3, 3),
+(14,2300, 4, '2025-07-14', '2025-07-13', 4, 4),
+(15,2600, 6, '2025-07-15', '2025-07-14', 5, 5),
+(16,1350, 2, '2025-07-16', '2025-07-15', 1, 1),
+(17,1250, 1, '2025-07-17', '2025-07-16', 2, 2),
+(18,1550, 3, '2025-07-18', '2025-07-17', 3, 3),
+(19,2050, 4, '2025-07-19', '2025-07-18', 4, 4),
+(20,3000, 6, '2025-07-20', '2025-07-19', 5, 1);
+
+----------2
+Create Table Manager(
+	ID serial PRIMARY KEY,
+	Name varchar(15) NOT NULL,
+	Phone_No numeric,
+	Salary int,
+	Job_Title varchar(20),
+	Deaprtment_Name varchar(20)
+);
+
+Create Table Employee(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Phone_No numeric,
+	Salary int,
+	Joining_Date Date,
+	Job_Title varchar(20),
+	Deaprtment_Name varchar(20),
+	Manager_ID int REFERENCES Manager(ID)
+);
+
+SELECT * FROM Manager
+SELECT * FROM Employee
+----------2
+INSERT INTO Manager
+VALUES
+(1,'Ravi Shah', 9876543210, 75000, 'HR Manager', 'Human Resources'),
+(2,'Meena Patel', 9123456789, 82000, 'IT Head', 'Information Tech'),
+(3,'Amit Joshi', 9988776655, 78000, 'Sales Lead', 'Sales'),
+(4,'Nidhi Rana', 8899001122, 85000, 'Finance Mgr', 'Finance'),
+(5,'Karan Mehta', 9090909090, 72000, 'Logistics Head', 'Logistics'),
+(6,'Sneha Desai', 9871234567, 79000, 'Ops Manager', 'Operations'),
+(7,'Vikas Solanki', 9823456710, 88000, 'Marketing Mgr', 'Marketing'),
+(8,'Priya Gohil', 9012345678, 81000, 'Project Lead', 'Projects'),
+(9,'Rahul Thakkar', 9944556677, 76500, 'QA Manager', 'Quality'),
+(10,'Anjali Soni', 9876001234, 84500, 'Legal Advisor', 'Legal');
+
+INSERT INTO Employee
+VALUES
+(1 ,'Ankit Patel', 9876543211,30000,'2023-01-10','Developer','Information Tech',2),
+(2 ,'Riya Mehta', 9876543212,28000,'2023-02-15','Tester','Quality',9),
+(3 ,'Kunal Joshi', 9876543213,32000,'2023-03-01','Analyst','Finance',4),
+(4 ,'Pooja Shah', 9876543214,31000,'2023-04-12','Sales Rep','Sales',3),
+(5 ,'Harshil Rana', 9876543215,29000,'2023-05-20','Support Engg','Operations',6),
+(6 ,'Dhruvi Desai', 9876543216,33000,'2023-06-05','QA Engg','Quality',9),
+(7 ,'Jigar Thakkar', 9876543217,30000,'2023-07-01','DevOps','Information Tech',2),
+(8 ,'Kavya Gohil', 9876543218,27000,'2023-08-10','Clerk','Finance',4),
+(9 ,'Ritesh Solanki', 9876543219,31000,'2023-09-15','Sales Exec','Sales',3),
+(10,'Neha Soni', 9876543220,28000,'2023-10-20','HR Assist','Human Resources',1),
+(11,'Rohit Vyas', 9876543221,35000,'2023-11-25','Designer','Marketing',7),
+(12,'Komal Panchal', 9876543222,29000,'2023-12-10','Receptionist','Projects',8),
+(13,'Vivek Bhatt', 9876543223,27500,'2024-01-05','Support','Operations',6),
+(14,'Snehal Shah', 9876543224,30500,'2024-02-12','Trainee','Human Resources ',1),
+(15,'Ajay Modi', 9876543225,29500,'2024-03-20','Accountant','Finance',4),
+(16,'Rupal Parmar', 9876543226,34000,'2024-04-15','Field Rep','Marketing',7),
+(17,'Devanshi Dave', 9876543227,28500,'2024-05-18','Legal Asst','Legal',10),
+(18,'Yash Trivedi', 9876543228,26000,'2024-06-10','Sales Trainee','Sales',3),
+(19,'Manan Kapadia', 9876543229,31500,'2024-06-20','Support','Projects',8),
+(20,'Chirag Rawal', 9876543230,32500,'2024-07-01','HR Exec','Human Resources ',1);
+
+----------3
+CREATE TABLE Department(
+	ID serial PRIMARY KEY,
+	Title varchar(20) NOT NULL UNIQUE
+);
+
+CREATE TABLE Job(
+	ID serial PRIMARY KEY,
+	Title varchar(15) NOT NULL,
+	Department_ID int REFERENCES Department(ID)
+);
+
+CREATE TABLE Country(
+	ID serial PRIMARY KEY,
+	Name varchar(20) Not NULL UNIQUE,
+	code varchar(5)
+);
+
+CREATE TABLE State(
+	ID serial PRIMARY KEY,
+	Name varchar(20) unique,
+	Country_ID int REFERENCES Country(ID)
+);
+
+CREATE TABLE Employees(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Phone_No numeric,
+	Salary int,
+	Joining_Date Date,
+	Job_ID int REFERENCES Job(ID),
+	State_ID int REFERENCES State(ID)
+);
+
+SELECT * FROM Department
+SELECT * FROM Job
+SELECT * FROM Country
+SELECT * FROM State
+SELECT * FROM Employees
+
+----------3
+INSERT INTO Department
+VALUES
+(1,'Information Tech'),
+(2,'Human Resources'),
+(3,'Sales'),
+(4,'Finance'),
+(5,'Marketing');
+
+INSERT INTO Job
+VALUES
+(1,'Accountant', 4),
+(2,'DevOps', 1),
+(3,'Field Rep', 5),
+(4,'HR Assist', 2),
+(5,'Sales Exec', 3),
+(6,'Analyst', 4),
+(7,'HR Exec', 2),
+(8,'Developer', 1),
+(9,'Designer', 5),
+(10,'Sales Rep', 3);
+
+INSERT INTO Country
+VALUES
+(1,'India', 'IN'),
+(2,'United States', 'US'),
+(3,'Canada', 'CA'),
+(4,'Australia', 'AU'),
+(5,'Germany', 'DE');
+
+INSERT INTO State
+VALUES
+(1,'Texas', 2),
+(2,'Ontario', 3),
+(3,'Victoria', 4),
+(4,'Bavaria', 5),
+(5,'Gujarat', 1),
+(6,'California', 2),
+(7,'New South Wales', 4),
+(8,'Quebec', 3),
+(9,'Berlin', 5),
+(10,'Maharashtra', 1);
+
+INSERT INTO Employees
+VALUES
+(1, 'Ankit Patel', 9876543210, 30000, '2023-01-10', 1, 1),
+(2, 'Riya Mehta', 9876543211, 28000, '2023-01-15', 2, 2),
+(3, 'Kunal Joshi', 9876543212, 32000, '2023-02-01', 3, 3),
+(4, 'Pooja Shah', 9876543213, 31000, '2023-02-10', 4, 5),
+(5, 'Harshil Rana', 9876543214, 29000, '2023-03-01', 5, 6),
+(6, 'Dhruvi Desai', 9876543215, 33000, '2023-03-05', 6, 7),
+(7, 'Jigar Thakkar', 9876543216, 30000, '2023-03-15', 8, 8),
+(8, 'Kavya Gohil', 9876543217, 27000, '2023-04-01', 9, 9),
+(9, 'Ritesh Solanki', 9876543218, 31000, '2023-04-05', 10, 10),
+(10, 'Neha Soni', 9876543219, 28000, '2023-04-10', 1, 2),
+(11, 'Rohit Vyas', 9876543220, 35000, '2023-04-15', 2, 3),
+(12, 'Komal Panchal', 9876543221, 29000, '2023-05-01', 3, 5),
+(13, 'Vivek Bhatt', 9876543222, 27500, '2023-05-05', null, 6),
+(14, 'Snehal Shah', 9876543223, 30500, '2023-05-10', 5, 7),
+(15, 'Ajay Modi', 9876543224, 29500, '2023-06-01', 6, 8),
+(16, 'Rupal Parmar', 9876543225, 34000, '2023-06-10', 8, 9),
+(17, 'Devanshi Dave', 9876543226, 28500, '2023-06-15', 9, 10),
+(18, 'Yash Trivedi', 9876543227, 26000, '2023-07-01', 10, 1),
+(19, 'Manan Kapadia', 9876543228, 31500, '2023-07-05', 1, 2),
+(20, 'Chirag Rawal', 9876543229, 32500, '2023-07-10', 2, 3);
+
+----------4
+CREATE TABLE Product(
+	ID serial PRIMARY KEY,
+	Name varchar(20) unique,
+	Category varchar(20),
+	Unit_Price int,
+	Quantity int
+);
+
+CREATE TABLE Salesmans(
+	ID serial PRIMARY KEY,
+	Name varchar(20) unique,
+	Phone_No numeric,
+	Commission_Rate float,
+	City varchar(15)
+);
+
+CREATE TABLE Customers(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Phone_No numeric,
+	City varchar(15)
+);
+
+CREATE TABLE Orders1(
+	ID serial PRIMARY KEY,
+	Customer_ID int REFERENCES Customers(ID),
+	Salesman_ID int REFERENCES Salesmans(ID),
+	Product_ID int REFERENCES Product(ID),
+	Total_Amount int,
+	Quantity int,
+	Order_Date date,
+	Placed_Date date
+);
+
+SELECT * FROM Product
+SELECT * FROM Salesmans
+SELECT * FROM Customers
+SELECT * FROM Orders1
+----------4
+INSERT INTO Product
+VALUES
+(1, 'Notebook', 'Stationery', 50, 100),
+(2, 'Pen', 'Stationery', 10, 300),
+(3, 'Mouse', 'Electronics', 400, 50),
+(4, 'Keyboard', 'Electronics', 800, 40),
+(5, 'Chair', 'Furniture', 1500, 20),
+(6, 'Table', 'Furniture', 2500, 15),
+(7, 'Lamp', 'Home Decor', 600, 30),
+(8, 'Bottle', 'Kitchenware', 150, 60),
+(9, 'Backpack', 'Accessories', 1200, 25),
+(10, 'Shoes', 'Footwear', 2000, 35);
+
+INSERT INTO Salesmans
+VALUES
+(1, 'Amit Shah', 9876543101, 0.05, 'Rajkot'),
+(2, 'Sneha Patel', 9876543102, 0.06, 'Surat'),
+(3, 'Vikram Joshi', 9876543103, 0.07, 'Ahmedabad'),
+(4, 'Neha Mehta', 9876543104, 0.04, 'Vadodara'),
+(5, 'Ravi Desai', 9876543105, 0.05, 'Surat'),
+(6, 'Priya Shah', 9876543106, 0.06, 'Rajkot'),
+(7, 'Kunal Thakkar', 9876543107, 0.07, 'Bhavnagar'),
+(8, 'Rupal Gohil', 9876543108, 0.05, 'Jamnagar'),
+(9, 'Harsh Solanki', 9876543109, 0.06, 'Rajkot'),
+(10, 'Disha Vyas', 9876543110, 0.05, 'Surat');
+
+INSERT INTO Customers
+VALUES
+(1, 'Ramesh Patel', 9876500001, 'Rajkot'),
+(2, 'Komal Shah', 9876500002, 'Surat'),
+(3, 'Nirav Joshi', 9876500003, 'Ahmedabad'),
+(4, 'Jigna Mehta', 9876500004, 'Vadodara'),
+(5, 'Chirag Desai', 9876500005, 'Surat'),
+(6, 'Neha Bhatt', 9876500006, 'Rajkot'),
+(7, 'Hardik Gohil', 9876500007, 'Bhavnagar'),
+(8, 'Dhruvi Soni', 9876500008, 'Jamnagar'),
+(9, 'Karan Trivedi', 9876500009, 'Rajkot'),
+(10, 'Rupal Dave', 9876500010, 'Surat'),
+(11, 'Milan Solanki', 9876500011, 'Ahmedabad'),
+(12, 'Pooja Rana', 9876500012, 'Surat'),
+(13, 'Ankit Vyas', 9876500013, 'Bhavnagar'),
+(14, 'Meera Thakkar', 9876500014, 'Vadodara'),
+(15, 'Harsh Pandya', 9876500015, 'Surat'),
+(16, 'Krupa Shah', 9876500016, 'Rajkot'),
+(17, 'Bhavik Parmar', 9876500017, 'Ahmedabad'),
+(18, 'Disha Gohil', 9876500018, 'Rajkot'),
+(19, 'Yash Modi', 9876500019, 'Jamnagar'),
+(20, 'Snehal Panchal', 9876500020, 'Surat');
+
+INSERT INTO Orders1
+VALUES
+(1, 1, 1, 1, 1000, 2, '2025-07-01', '2025-06-30'),
+(2, 2, 2, 2, 1500, 3, '2025-07-02', '2025-07-01'),
+(3, 3, 5, 3, 2000, 4, '2025-07-03', '2025-07-02'),
+(4, 4, 4, 4, 800, 2, '2025-07-04', '2025-07-03'),
+(5, 5, 3, 5, 1200, 2, '2025-07-05', '2025-07-04'),
+(6, 6, 6, 6, 1100, 1, '2025-07-06', '2025-07-05'),
+(7, 7, 7, 7, 1600, 2, '2025-07-07', '2025-07-06'),
+(8, 8, 8, 8, 1400, 2, '2025-07-08', '2025-07-07'),
+(9, 9, 9, 9, 1300, 1, '2025-07-09', '2025-07-08'),
+(10, 10, 1, 1, 1000, 1, '2025-07-10', '2025-07-09'),
+(11, 11, 2, 2, 900, 1, '2025-07-11', '2025-07-10'),
+(12, 12, 3, 3, 1250, 2, '2025-07-12', '2025-07-11'),
+(13, 13, 4, 4, 950, 1, '2025-07-13', '2025-07-12'),
+(14, 14, 5, 5, 1100, 1, '2025-07-14', '2025-07-13'),
+(15, 15, 6, 6, 1700, 2, '2025-07-15', null),
+(16, 16, 7, 7, 1350, 1, '2025-07-16', '2025-07-15'),
+(17, 17, 8, 8, 1450, 1, '2025-07-17', '2025-07-16'),
+(18, 18, 9, 9, 1550, 2, '2025-07-18', '2025-07-17'),
+(19, 19, 1, 1, 1000, 1, '2025-07-19', '2025-07-18'),
+(20, 1, 2, 2, 1500, 1, '2025-07-20', '2025-07-19');
+
+----------5
+CREATE TABLE Book(
+	ID serial PRIMARY KEY,
+	Title varchar(30) NOT NULL UNIQUE,
+	Author varchar(20),
+	Publisher varchar(20),
+	Category varchar(20),
+	Unit_Price int
+);
+
+CREATE TABLE Shift(
+	ID serial PRIMARY KEY,
+	title varchar(20) NOT NULL UNIQUE,
+	Start_Time time,
+	End_Time time
+);
+
+CREATE Table Customers1(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Age int,
+	Borrowed_Date timestamp,
+	Return_Date timestamp,
+	Duration_Day int,
+	Phone_No numeric,
+	City varchar(15),
+	Shift_ID int REFERENCES Shift(ID),
+	Book_ID int REFERENCES Book(ID)
+);
+
+SELECT * FROM Book
+SELECT * FROM Shift
+SELECT * FROM Customers1
+
+----------5
+INSERT INTO Book
+VALUES
+(1, 'The Silent River', 'Ravi Subramanian', 'Penguin', 'Thriller', 350),
+(2, 'Wings of Fire', 'A.P.J. Kalam', 'Universities Press', 'Biography', 250),
+(3, 'Half Girlfriend', 'Chetan Bhagat', 'Rupa', 'Romance', 300),
+(4, 'The White Tiger', 'Aravind Adiga', 'HarperCollins', 'Fiction', 400),
+(5, 'The Alchemist', 'Paulo Coelho', 'HarperOne', 'Philosophy', 320),
+(6, 'Harry Potter', 'J.K. Rowling', 'Bloomsbury', 'Fantasy', 500),
+(7, 'Sapiens', 'Yuval Harari', 'Vintage', 'History', 450),
+(8, 'Rich Dad Poor Dad', 'Robert Kiyosaki', 'Plata', 'Finance', 330),
+(9, 'Atomic Habits', 'James Clear', 'Penguin', 'Self-help', 380),
+(10, 'Think Like a Monk', 'Jay Shetty', 'HarperCollins', 'Self-help', 370),
+(11, 'Ikigai', 'Francesc Miralles', 'Penguin', 'Philosophy', 310),
+(12, 'Do Epic Shit', 'Ankur Warikoo', 'Juggernaut', 'Motivation', 290),
+(13, 'To Kill a Mockingbird', 'Harper Lee', 'Arrow', 'Classic', 340),
+(14, 'The Psychology of Money', 'Morgan Housel', 'Jaico', 'Finance', 360),
+(15, 'The Monk Who Sold...', 'Robin Sharma', 'Jaico', 'Self-help', 300),
+(16, 'Becoming', 'Michelle Obama', 'Crown', 'Biography', 410),
+(17, 'The Power of Habit', 'Charles Duhigg', 'Random House', 'Self-help', 395),
+(18, 'Rework', 'Jason Fried', 'Crown', 'Business', 365),
+(19, '1984', 'George Orwell', 'Secker & Warburg', 'Dystopian', 280),
+(20, 'Deep Work', 'Cal Newport', 'Grand Central', 'Productivity', 355);
+
+INSERT INTO Shift
+VALUES
+(1, 'Morning', '06:00:00', '14:00:00'),
+(2, 'Afternoon', '14:00:00', '22:00:00'),
+(3, 'Night', '22:00:00', '06:00:00');
+
+INSERT INTO Customers1
+VALUES
+(1, 'Ravi Shah', 25, '2025-07-01 10:00:00', '2025-07-05 10:00:00', 4, 9876543201, 'Rajkot', 1, 2),
+(2, 'Pooja Mehta', 30, '2025-07-02 11:00:00', '2025-07-06 11:00:00', 4, 9876543202, 'Ahmedabad', 2, 4),
+(3, 'Karan Patel', 28, '2025-07-03 12:00:00', '2025-07-07 12:00:00', 4, 9876543203, 'Surat', 1, 5),
+(4, 'Dhruvi Rana', 26, '2025-07-04 13:00:00', '2025-07-08 13:00:00', 4, 9876543204, 'Vadodara', 2, 3),
+(5, 'Ravi Shah', 22, '2025-07-01 10:00:00', '2025-07-10 09:00:00', 5, 9876543205, 'Bhavnagar', 1, 6),
+(6, 'Sneha Gohil', 31, null, null, 5, 9876543206, 'Rajkot',null,null),
+(7, 'Jignesh Modi', 27, '2025-07-07 16:00:00', '2025-07-12 16:00:00', 5, 9876543207, 'Morbi', 1, 10),
+(8, 'Komal Vora', 29, '2025-07-08 14:00:00', '2025-07-12 14:00:00', 4, 9876543208, 'Jamnagar', 2, 7),
+(9, 'Ritesh Thakkar', 24, '2025-07-09 17:00:00', '2025-07-13 17:00:00', 4, 9876543209, 'Junagadh', 1, 9),
+(10, 'Neha Soni', 32, '2025-07-10 08:00:00', '2025-07-14 08:00:00', 4, 9876543210, 'Rajkot', 2, 1),
+(11, 'Bhavin Bhatt', 35, '2025-07-11 09:00:00', '2025-07-15 09:00:00', 4, 9876543211, 'Surat', 1, 2),
+(12, 'Rupal Parmar', 23, '2025-07-12 10:00:00', '2025-07-16 10:00:00', 4, 9876543212, 'Ahmedabad', 2, 4),
+(13, 'Devanshi Dave', 26, '2025-07-13 11:00:00', '2025-07-17 11:00:00', 4, 9876543213, 'Rajkot', 1, 5),
+(14, 'Yash Trivedi', 29, '2025-07-14 12:00:00', '2025-07-18 12:00:00', 4, 9876543214, 'Surat', 2, 3),
+(15, 'Manan Kapadia', 30, '2025-07-15 13:00:00', '2025-07-19 13:00:00', 4, 9876543215, 'Ahmedabad', 1, 6),
+(16, 'Chirag Rawal', 34, '2025-07-16 14:00:00', '2025-07-20 14:00:00', 4, 9876543216, 'Vadodara', 2, 7),
+(17, 'Rina Shah', 33, '2025-07-17 15:00:00', '2025-07-21 15:00:00', 4, 9876543217, 'Rajkot', 1, 8),
+(18, 'Alpa Desai', 28, '2025-07-18 16:00:00', '2025-07-22 16:00:00', 4, 9876543218, 'Bhavnagar', 2, 9),
+(19, 'Nikhil Vyas', 27, '2025-07-19 10:00:00', '2025-07-23 10:00:00', 4, 9876543219, 'Jamnagar', 1, 10),
+(20, 'Kavya Joshi', 21, '2025-07-20 10:00:00', null , null, 9876543220, 'Morbi', 2, 1);
+
+
+----------6
+CREATE TABLE Customers2(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Phone_No numeric,
+	City varchar(15)
+);
+
+CREATE TABLE Stock(
+	ID serial PRIMARY KEY,
+	Product_Name varchar(20) UNIQUE NOT NULL,
+	Quantity int,
+	Unit_Price int
+);
+
+CREATE TABLE Orders2(
+	ID serial PRIMARY KEY,
+	Customer_ID int REFERENCES Customers2(ID),
+	Stock_ID int REFERENCES Stock(ID),
+	Total_Amount int,
+	Quantity int,
+	Order_Date date,
+	Placed_Date date
+);
+
+SELECT * FROM customers2
+SELECT * FROM Stock
+SELECT * FROM Orders2
+
+----------6
+INSERT INTO Customers2
+VALUES
+(1, 'Ankit Patel', 9876543101, 'Ahmedabad'),
+(2, 'Riya Mehta', 9876543102, 'Rajkot'),
+(3, 'Kunal Joshi', 9876543103, 'Surat'),
+(4, 'Pooja Shah', 9876543104, 'Vadodara'),
+(5, 'Harshil Rana', 9876543105, 'Bhavnagar'),
+(6, 'Dhruvi Desai', 9876543106, 'Jamnagar'),
+(7, 'Jigar Thakkar', 9876543107, 'Gandhinagar'),
+(8, 'Kavya Gohil', 9876543108, 'Morbi'),
+(9, 'Ritesh Solanki', 9876543109, 'Junagadh'),
+(10, 'Neha Soni', 9876543110, 'Amreli');
+
+INSERT INTO Stock
+VALUES
+(1, 'Laptop', 15, 55000),
+(2, 'Mobile', 30, 25000),
+(3, 'Headphones', 50, 3000),
+(4, 'Chair', 40, 4000),
+(5, 'Table', 20, 7000),
+(6, 'Sofa', 10, 25000),
+(7, 'Shirt', 60, 1200),
+(8, 'Jeans', 35, 2500),
+(9, 'Watch', 25, 3500),
+(10, 'Belt', 45, 800),
+(11, 'Keyboard', 70, 1500),
+(12, 'Mouse', 90, 800),
+(13, 'Monitor', 25, 12000),
+(14, 'Printer', 15, 8500),
+(15, 'Speakers', 40, 3000);
+
+INSERT INTO Orders2
+VALUES
+(1, 1, 1, 55000, 1, '2025-07-01', '2025-07-01'),
+(2, 2, 2, 50000, 2, '2025-07-02', '2025-07-02'),
+(3, 3, 3, 6000, 2, '2025-07-03', '2025-07-03'),
+(4, 4, 4, 8000, 2, '2025-07-04', '2025-07-04'),
+(5, 5, 5, 7000, 1, '2025-07-05', '2025-07-05'),
+(6, 6, 6, 50000, 2, '2025-07-06', '2025-07-06'),
+(7, 7, 7, 2400, 2, '2025-07-07', '2025-07-07'),
+(8, 8, 8, 7500, 3, '2025-07-08', '2025-07-08'),
+(9, 9, 9, 10500, 3, '2025-07-09', '2025-07-09'),
+(10, 1, 10, 1600, 2, '2025-07-10', '2025-07-10'),
+(11, 2, 11, 4500, 3, '2025-07-11', '2025-07-11'),
+(12, 3, 12, 1600, 2, '2025-07-12', '2025-07-12'),
+(13, 4, 13, 24000, 2, '2025-07-13', '2025-07-13'),
+(14, 5, 14, 25500, 3, '2025-07-14', '2025-07-14'),
+(15, 6, 1, 110000, 2, '2025-07-15', '2025-07-15'),
+(16, 7, 2, 75000, 3, '2025-07-16', '2025-07-16'),
+(17, 8, 3, 9000, 3, '2025-07-17', '2025-07-17'),
+(18, 9, 4, 16000, 4, '2025-07-18', '2025-07-18'),
+(19, 1, 5, 14000, 2, '2025-07-19', '2025-07-19'),
+(20, 2, 6, 25000, 1, '2025-07-20', NULL);
+
+----------7
+CREATE TABLE Supplier(
+	ID serial PRIMARY KEY,
+	Name varchar(20) NOT NULL,
+	Phone_No numeric,
+	City varchar(20)
+);
+
+CREATE TABLE Products(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL UNIQUE,
+	Unit_Price int,
+	Quantity int,
+	Total_Amount int,
+	Supplier_ID int REFERENCES Supplier(ID)
+);
+
+SELECT * FROM Supplier
+SELECT * FROM Products
+
+----------7
+
+INSERT INTO Supplier
+VALUES
+(1, 'Raj Traders', 9876500001, 'Ahmedabad'),
+(2, 'Shah & Sons', 9876500002, 'Rajkot'),
+(3, 'Patel Supplies', 9876500003, 'Surat'),
+(4, 'Mehta Agencies', 9876500004, 'Vadodara'),
+(5, 'Rana Distributors', 9876500005, 'Bhavnagar'),
+(6, 'Desai Enterprises', 9876500006, 'Jamnagar'),
+(7, 'Joshi Wholesalers', 9876500007, 'Gandhinagar'),
+(8, 'Thakkar Traders', 9876500008, 'Morbi'),
+(9, 'Gohil Suppliers', 9876500009, 'Junagadh'),
+(10, 'Soni & Co', 9876500010, 'Amreli'),
+(11, 'Bhatt Distributors', 9876500011, 'Nadiad'),
+(12, 'Panchal Agencies', 9876500012, 'Anand'),
+(13, 'Parmar Traders', 9876500013, 'Bharuch'),
+(14, 'Dave Suppliers', 9876500014, 'Navsari'),
+(15, 'Trivedi & Sons', 9876500015, 'Porbandar');
+
+INSERT INTO Products
+VALUES
+(1, 'Laptop', 55000, 10, 550000, 1),
+(2, 'Mobile', 25000, 20, 500000, 1),
+(3, 'Headphones', 3000, 30, 90000, 2),
+(4, 'Keyboard', 1500, 25, 37500, 2),
+(5, 'Mouse', 800, 40, 32000, 3),
+(6, 'Monitor', 12000, 15, 180000, 3),
+(7, 'Printer', 8500, 10, 85000, 4),
+(8, 'Speakers', 3000, 35, 105000, 4),
+(9, 'Table', 7000, 12, 84000, 5),
+(10, 'Chair', 4000, 20, 80000, 5),
+(11, 'Sofa', 25000, 5, 125000, 6),
+(12, 'Watch', 3500, 18, 63000, 7),
+(13, 'Belt', 800, 22, 17600, 8),
+(14, 'Shirt', 1200, 28, 33600, 9),
+(15, 'Jeans', 2500, 30, 75000, 10),
+(16, 'Projector', 45000, 6, 270000, 11),
+(17, 'Camera', 30000, 8, 240000, 12),
+(18, 'Tripod', 5000, 15, 75000, 13),
+(19, 'Scanner', 15000, 5, 75000, 14),
+(20, 'Smartwatch', 8000, 10, 80000, 1);

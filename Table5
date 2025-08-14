@@ -1,0 +1,88 @@
+CREATE TABLE Book(
+	ID serial PRIMARY KEY,
+	Title varchar(30) NOT NULL UNIQUE,
+	Author varchar(20),
+	Publisher varchar(20),
+	Category varchar(20),
+	Unit_Price int
+);
+
+CREATE TABLE Shift(
+	ID serial PRIMARY KEY,
+	title varchar(20) NOT NULL UNIQUE,
+	Start_Time time,
+	End_Time time
+);
+
+CREATE Table Customers1(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Age int,
+	Borrowed_Date timestamp,
+	Return_Date timestamp,
+	Duration_Day int,
+	Phone_No numeric,
+	City varchar(15),
+	Shift_ID int REFERENCES Shift(ID),
+	Book_ID int REFERENCES Book(ID)
+);
+
+SELECT * FROM Book
+SELECT * FROM Shift
+SELECT * FROM Customers1
+
+-----------------Query
+
+select title,author,category from book
+
+select customers1.name,book.title,shift.title from customers1 join book on book.id = customers1.book_id join shift on shift.id = customers1.shift_id
+
+select name from customers1 where borrowed_date >= CURRENT_DATE - 10
+
+select book.title from book join customers1 on book.id = customers1.book_id where customers1.return_date is null
+
+select customers1.name,count(customers1.book_id) as borrowed_book from customers1 group by customers1.name
+
+select customers1.name from customers1 where book_id is null
+
+select customers1.name from customers1 join book on customers1.book_id = book.id where book.author = 'A.P.J. Kalam'
+
+select book.id,book.title from book left join customers1 on book.id = customers1.book_id where customers1.book_id is null
+
+select customers1.name from customers1 group by customers1.name having count(book_id) >= 1
+
+select customers1.name from customers1 join book on book.id = customers1.book_id
+group by customers1.name
+having count(distinct book.category) = 1 and min(book.category) = 'Self-help'
+
+select sum(book.unit_price) from book join customers1 on book.id = customers1.book_id
+
+select book.title,count(customers1.book_id) from book join customers1 on book.id = customers1.book_id
+group by book.title order by count(customers1.book_id) desc limit 1
+
+select book.category, count(customers1.book_id) from book join customers1 on book.id = customers1.book_id
+group by book.category
+
+select name,sum(duration_day) from customers1 where return_date is not null
+group by name order by sum(duration_day) desc limit 1
+
+select name,avg(duration_day) from customers1 where return_date is not null group by name
+
+select customers1.name,book.title from customers1 join book on customers1.book_id = book.id 
+where customers1.duration_day > 4
+
+select name from customers1 
+group by name,
+extract(year from borrowed_date),extract(week from borrowed_date) 
+having count(*) > 1
+
+select book.title from book join customers1 on book.id = customers1.book_id 
+where book.id not in (select book_id from shift where borrowed_date >= CURRENT_DATE-15)
+
+select customers1.name,shift.title,customers1.borrowed_date from customers1 join shift on customers1.shift_id = shift.id
+where customers1.borrowed_date = (select max(customers2.borrowed_date) from customers1 customers2 where customers1.id = customers2.id);
+
+select extract(year from borrowed_date) as year,extract(month from borrowed_date) as month,count(*) as books_borrowed from customers1
+where book_id is not null
+group by extract(year from borrowed_date),extract(month from borrowed_date)
+order by year,month

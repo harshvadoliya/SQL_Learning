@@ -1,0 +1,98 @@
+CREATE TABLE Product(
+	ID serial PRIMARY KEY,
+	Name varchar(20) unique,
+	Category varchar(20),
+	Unit_Price int,
+	Quantity int
+);
+
+CREATE TABLE Salesmans(
+	ID serial PRIMARY KEY,
+	Name varchar(20) unique,
+	Phone_No numeric,
+	Commission_Rate float,
+	City varchar(15)
+);
+
+CREATE TABLE Customers(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Phone_No numeric,
+	City varchar(15)
+);
+
+CREATE TABLE Orders1(
+	ID serial PRIMARY KEY,
+	Customer_ID int REFERENCES Customers(ID),
+	Salesman_ID int REFERENCES Salesmans(ID),
+	Product_ID int REFERENCES Product(ID),
+	Total_Amount int,
+	Quantity int,
+	Order_Date date,
+	Placed_Date date
+);
+
+SELECT * FROM Product
+SELECT * FROM Salesmans
+SELECT * FROM Customers
+SELECT * FROM Orders1
+
+-----------------Query
+
+select customers.name,sum(orders1.total_amount) from customers join orders1 on customers.id = Orders1.customer_id
+group by customers.name
+
+select product.name,customers.name from product join Orders1 on product.id = orders1.product_id join customers on Orders1.customer_id = customers.id
+where customers.city = 'Rajkot'
+
+select salesmans.name,count(customers.id) from salesmans join orders1 on orders1.salesman_id = salesmans.ID join customers on orders1.customer_id = customers.id
+group by salesmans.name
+
+select product.name,orders1.quantity,sum(product.unit_price*orders1.quantity) as total_price from orders1 join product on orders1.product_id = product.id
+group by product.name,orders1.quantity
+
+select customers.name from customers join orders1 on orders1.customer_id = customers.id where orders1.placed_date is null
+
+select salesmans.name, sum(orders1.total_amount) from salesmans join orders1 on orders1.salesman_id = Salesmans.id
+group by salesmans.name
+
+select product.name,sum(orders1.quantity) as total_quantity_sold from product join orders1 on product.id = orders1.product_id
+group by product.name
+
+select customers.name,sum(orders1.total_amount) as total_purchase_amount from customers join orders1 on customers.id = orders1.customer_id
+group by Customers.name order by sum(orders1.total_amount) desc limit 5
+
+select customers.city,avg(orders1.total_amount) from customers join orders1 on customers.id = orders1.customer_id 
+group by customers.city
+
+select salesmans.name, sum(orders1.total_amount) as total_sales from salesmans join orders1 on salesmans.id = orders1.salesman_id
+group by salesmans.name having sum(orders1.total_amount) > 3000
+
+select customers.name, product.category from customers join orders1 on customers.id = orders1.customer_id join product on product.id = orders1.product_id
+where product.category = 'Electronics'
+
+select * from orders1 where total_amount > (select avg(total_amount) from orders1)
+
+select name from product where id not in (select product_id from orders1)
+
+select product.category,product.name,product.unit_price from product 
+where product.unit_price=(
+	select max(product2.unit_price)
+	from product product2
+	where product2.category = product.category
+)
+
+select salesmans.name, count(distinct customers.city) as city_count from salesmans join orders1 on salesmans.id = orders1.salesman_id join customers on customers.id = orders1.customer_id
+group by salesmans.name having count(distinct customers.city) > 1
+
+select product.name,sum(orders1.quantity * product.unit_price) as total_revenue from product join orders1 on orders1.product_id = product.id 
+group by product.name
+
+select product.name from orders1 join product on product.id = orders1.product_id
+group by product.name having count(DISTINCT orders1.salesman_id) = 1
+
+select customers.name from customers join orders1 on customers.id = orders1.customer_id
+where orders1.placed_date >= CURRENT_DATE - 10
+
+select salesmans.name,sum(orders1.quantity * product.unit_price) as total_sales from salesmans join orders1 on salesmans.id = orders1.salesman_id join product on orders1.product_id = product.id
+group by salesmans.name order by sum(orders1.quantity * product.unit_price) desc limit 1

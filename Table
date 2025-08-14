@@ -1,0 +1,180 @@
+--1
+Order:
+	id int primary key,
+	customer_id int foreign key,
+	salesman_id int foreign key,
+	total_amount int,
+	quantity int,
+	order_date date,
+	placed_date date
+	
+Customer: 
+	id int primary key,
+	name varchar(30) not null,
+	phone_no. numeric,
+	city varchar(20),
+	pincode int
+	
+Salesman:
+	id int primary key,
+	name varchar(50) not null,
+	phone_no. bigint,
+	city varchar(20),
+	pincode int
+	
+-----------------------------------------
+--2
+Employee:
+	id int primary key,
+	first_name varchar(15) not null,
+	last_name varchar(15) not null,
+	phone_no. numeric,
+	email nvarchar(20),
+	salary int,
+	joining_date date,
+	job_title varchar(20),
+	department_name varchar(20),
+	manager_id int foreign key
+
+Manager:
+	id int primary key,
+	first_name varchar(15) not null,
+	last_name varchar(15) not null,
+	phone_no. numeric,
+	email nvarchar(20),
+	job_title varchar(20),
+	department_name varchar(20)
+
+-----------------------------------------
+--3
+Employee:
+	id int primary key,
+	first_name varchar(15) not null,
+	last_name varchar(15) not null,
+	phone_no. numeric,
+	email nvarchar(20),
+	salary int,
+	joining_date date,
+	state_id int foreign key,
+	job_id int foreign key,
+	
+Job:
+	id int primary key,
+	title varchar(20) not null,
+	department_id int foreign key,
+	
+Country:
+	id int primary key,
+	name varchar(20) not null unique,
+	code varchar(5)
+
+state:
+	id int primary key,
+	name varchar(20) not null,
+	country_id int foreign key
+	
+Department:
+	id int primary key,
+	name varchar(20) not null unique
+
+-----------------------------------------
+--4
+Order:
+	id int primary key,
+	customer_id int foreign key,
+	product_id int foreign key,
+	salesman_id int foreign key,
+	order_date date,
+	placed_date date,
+	total_amount int,
+	quantity int
+
+Product:
+	id int primary key,
+	name varchar(50) not null,
+	unit_price int,
+	stock int
+
+Salesman:
+	id int primary key,
+	name varchar(50) not null unique,
+	phone_no. numeric,
+	city varchar(20),
+	pincode int
+	
+Customer:
+	id int primary key,
+	name varchar(30) not null,
+	phone_no. numeric,
+	city varchar(20),
+	pincode int
+
+-----------------------------------------
+--5
+Book:
+	id int primary key,
+	title varchar(20),
+	author varchar(20),
+	publicer varchar(20),
+	unit_price int,
+	
+Shift:
+	id int primary key,
+	name varchar(20),
+	start_time time,
+	end_time time,
+	break_start_time time,
+	break_end_time time
+	
+Customer:
+	id int primary key,
+	name varchar(20),
+	age int,
+	borrowedate date,
+	returndate date,
+	duration_day int
+	phone_no. numeric,
+	city varchar(20),
+	pincode int
+	Shift_id int foreign key,
+	book_id int foreign key
+	
+-----------------------------------------
+--6
+Customer:
+	id int primary key,
+	name varchar(20),
+	phone_no. numeric,
+	city varchar(20),
+	pincode int
+	
+Stock:
+	id int primary key,
+	product_name varchar(20) unique,
+	quantity int,
+	unit_price int,
+	
+Order:
+	id int primary key,
+	customer_id int foreign key,
+	stock_id int foreign key,
+	order_date date,
+	placed_date date,
+	quantity int,
+	total_amount int
+
+-----------------------------------------	
+--7
+Product:
+	id int primary key,
+	name varchar(50) not null unique,
+	unit_price int,
+	quantity int,
+	supplier_id int primary key
+
+Supplier:
+	id int primary key,
+	name varchar(20) not null,
+	phone_no. numeric,
+	city varchar(20),
+	pincode int

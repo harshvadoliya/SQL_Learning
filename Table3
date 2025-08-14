@@ -1,0 +1,71 @@
+CREATE TABLE Department(
+	ID serial PRIMARY KEY,
+	Title varchar(20) NOT NULL UNIQUE
+);
+
+CREATE TABLE Job(
+	ID serial PRIMARY KEY,
+	Title varchar(15) NOT NULL,
+	Department_ID int REFERENCES Department(ID)
+);
+
+CREATE TABLE Country(
+	ID serial PRIMARY KEY,
+	Name varchar(20) Not NULL UNIQUE,
+	code varchar(5)
+);
+
+CREATE TABLE State(
+	ID serial PRIMARY KEY,
+	Name varchar(20) unique,
+	Country_ID int REFERENCES Country(ID)
+);
+
+CREATE TABLE Employees(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Phone_No numeric,
+	Salary int,
+	Joining_Date Date,
+	Job_ID int REFERENCES Job(ID),
+	State_ID int REFERENCES State(ID)
+);
+
+SELECT * FROM Department
+SELECT * FROM Job
+SELECT * FROM Country
+SELECT * FROM State
+SELECT * FROM Employees
+
+----------Query
+select e.name,j.title from employees e join Job j on j.ID = e.Job_ID
+
+select e.name from employees e join Job j on j.ID = e.Job_ID join department d on d.ID = j.department_ID
+where d.title = 'Sales'
+
+select d.title, avg(e.salary) from department d join job j on d.Id = j.department_ID join employees e on j.ID = e.job_id
+group by d.title
+
+select e.name, c.name from employees e join state s on e.state_ID = s.id join country c on s.Country_ID = c.ID
+where C.name = 'United States'
+
+select e.name,j.title,e.salary from employees e join job j on e.Job_id = J.id
+where not exists(
+	select 1 
+	from employees as other_employees 
+	where other_employees.job_id = e.job_id
+	and other_employees.salary > e.salary
+)
+
+select name from employees where job_id is null
+
+select d.title,e.name,e.salary from employees e join job j on e.job_id = j.id join department d on j.department_id = d.id
+where e.salary = (
+	select Max(e2.salary)
+	from Employees e2
+	join job j2 on e2.job_id = j2.id
+	where j2.department_id= j.department_id
+)
+
+select c.name,s.name,Count(e.id) as Employee_count from country c join state s on s.country_ID = c.id join employees e on e.state_id = s.id
+group by c.name,s.name order by c.name,s.name

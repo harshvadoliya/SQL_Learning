@@ -1,0 +1,76 @@
+Create Table Customer(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Phone_No numeric,
+	City varchar(15)
+);
+
+Create Table Salesman(
+	ID serial PRIMARY KEY,
+	Name varchar(30) NOT NULL,
+	Phone_No numeric,
+	Commission_Rate float,
+	City varchar(15)
+);
+
+Create Table Orders(
+	ID serial PRIMARY KEY,
+	Total_Amount int,
+	Quantity int,
+	Order_Date date,
+	Placed_Date date,
+	Customer_ID int REFERENCES Customer(ID),
+	Salesman_ID int REFERENCES Salesman(ID)
+);
+
+SELECT * FROM Customer
+SELECT * FROM Salesman
+SELECT * FROM Orders
+
+
+insert into Customer
+values
+(7,'Raj Patel',9876543210,'Rajkot'),
+(8,'Raj Patel',9876543210,'Rajkot'),
+(9,'Raj Patel',9876543210,'Rajkot'),
+(10,'Raj Patel',9876543210,'Rajkot');
+------------------Query
+
+Select o.* From Orders o join Salesman s on o.Salesman_ID = s.ID where s.Name = 'Viral Soni';
+
+Select c.Name From Customer c join Orders o on o.Customer_ID = c.ID Where o.placed_Date is Null;
+
+Select s.Name,Sum(o.total_amount) AS Total_Sales from salesman s join orders o on o.salesman_ID = s.ID Group by s.Name
+
+select c.Name, sum(o.total_amount) AS Total_order_Amount from customer c join orders o on o.Customer_ID = c.ID 
+group by c.name order by sum(o.total_amount) DESC limit 3
+
+select name,sum(case when name is not null then 1 else 0 end) as name_count from customer group by name
+
+select c.name,c.city,s.name,s.city from customer c join orders o on c.id = o.customer_ID join salesman s on s.id = o.Salesman_ID
+where c.city <> s.city
+select o.ID,c.Name,s.Name,o.Total_amount from customer c join orders o on c.id = o.customer_ID join salesman s on s.id = o.Salesman_ID
+where o.placed_date = '2025-07-01'
+
+select o.ID,o.Total_amount,s.Name,s.commission_rate,sum(o.Total_amount*s.commission_rate) as CalculatedCommission
+from Orders o join Salesman s on o.Salesman_ID = s.ID where o.ID = 5 group by o.id,s.name,s.commission_rate
+
+select c.name,s.name,s.commission_rate from customer c join orders o on c.id = o.customer_ID join salesman s on s.id = o.Salesman_ID
+where c.city <> s.city
+
+select c.name,s.name,s.commission_rate from customer c join orders o on c.id = o.customer_ID join salesman s on s.id = o.Salesman_ID
+where c.city <> s.city
+
+select c.Name,avg(o.Total_Amount) as Average_Order_Amount from customer c join orders o on c.id = o.customer_ID Group By c.name
+
+select s.name from salesman s left join orders o on o.salesman_ID = s.ID where o.id is null
+
+--------------------------------------
+
+select name, count(name) as name_count from customer group by name
+
+select name,
+	sum(case when name is not null then 1 else 0 end) as name_count
+	from customer group by name
+
+select distinct c1.name from customer c1 where EXISTS(select 1 from customer c2 where c1.name = c2.name and c1.id <> c2.id
